@@ -16,6 +16,30 @@ const data = {
       price: 550000000,
       profit: 50000000,
     },
+    {
+      id: 2,
+      unitId: 2,
+      residentId: 3,
+      transactionDate: new Date("2015-03-25"),
+      rentStartDate: "",
+      rentEndDate: "",
+      billingDate: "",
+      period: null,
+      price: 550000000,
+      profit: 50000000,
+    },
+    {
+      id: 3,
+      unitId: 1,
+      residentId: 2,
+      transactionDate: new Date("2016-03-25"),
+      rentStartDate: "",
+      rentEndDate: "",
+      billingDate: "",
+      period: null,
+      price: 550000000,
+      profit: 50000000,
+    },
   ],
   residents: [
     {
@@ -96,14 +120,45 @@ export function TransactionList() {
     residents: data.residents,
   });
 
+  const [oldListState, setOldListState] = useState({
+    transaction: listState.transactions,
+  });
+
+  const [isAscending, setIsAscending] = useState(true);
+
+  const sortByDate = (isAscending) => {
+    if (isAscending) {
+      const newTransactions = data.transactions.sort(
+        (a, b) => a.transactionDate - b.transactionDate
+      );
+      setListState({
+        ...listState,
+        transactions: newTransactions,
+      });
+      console.log("IN ASCENDING", listState.transactions);
+    } else {
+      const newTransactions = data.transactions.sort(
+        (a, b) => b.transactionDate - a.transactionDate
+      );
+      setListState({
+        ...listState,
+        transactions: newTransactions,
+      });
+      console.log("IN DESCENDING", listState.transactions);
+    }
+    console.log("IN ASCENDING?", isAscending);
+    setIsAscending(!isAscending);
+    console.log("IN ASCENDING??", isAscending);
+  };
+
   return (
     <>
       <Row>
         <Button>Add Transaction</Button>
         <Button>Filter by Profit</Button>
-        <Button>Filter by Transaction Date</Button>
-        <Button>Ascending</Button>
-        <Button>Descending</Button>
+        <Button onClick={() => sortByDate(isAscending)}>
+          Filter by Transaction Date
+        </Button>
       </Row>
       <Row>
         <Col>
