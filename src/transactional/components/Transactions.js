@@ -11,7 +11,7 @@ export const Transactions = () => {
   return (
     <Provider store={apartStore}>
       {/* {console.log(apartStore.getState())} */}
-      {page === "list" ? (
+      {page === "form" ? (
         <TransactionForm setPage={setPage} />
       ) : (
         <TransactionList setPage={setPage} />
