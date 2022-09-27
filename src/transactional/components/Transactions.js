@@ -6,12 +6,12 @@ import { Provider } from "react-redux";
 import { apartStore } from "../../redux/store";
 
 export const Transactions = () => {
-  const [page,setPage] = useState('list')
+  const [page,setPage] = useState('form')
 
   return (
     <Provider store={apartStore}>
       {/* {console.log(apartStore.getState())} */}
-      {page === "list" ? (
+      {page === "form" ? (
         <TransactionForm setPage={setPage} />
       ) : (
         <TransactionList setPage={setPage} />

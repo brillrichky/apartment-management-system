@@ -15,6 +15,7 @@ import moment from 'moment'
 
 function TransactionForm(props) {
     const dispatch = useDispatch();
+    const {setPage} = props
     const state = useSelector((storedState) => storedState);
     console.log(state)
     const [form] = Form.useForm()
@@ -24,7 +25,7 @@ function TransactionForm(props) {
         dispatch(getListUnits())
     },[])
 
-    const [hide,setHide] = useState(false)
+    const [hide,setHide] = useState(true)
 
     const disabledDate = (current) => {
       // Can not select days before today and today
@@ -56,6 +57,7 @@ function TransactionForm(props) {
         console.log(form.getFieldsValue())
         console.log(body)
         dispatch(postTransactional(body));
+        setPage('list')
     }
 
     const onChangeType = (e) => {
@@ -234,7 +236,7 @@ function TransactionForm(props) {
                     }
                   />
                 </Form.Item>
-                {form.getFieldValue("type") === "sewa" ? (
+                {hide === false ? (
                   <>
                     <Form.Item
                       hidden={false}
@@ -292,7 +294,11 @@ function TransactionForm(props) {
                         },
                       ]}
                     >
-                      <DatePicker />
+                      <DatePicker
+                        disabledDate={(current) =>
+                          current.isBefore(moment().subtract(1, "day"))
+                        }
+                      />
                     </Form.Item>
                   </>
                 ) : null}
