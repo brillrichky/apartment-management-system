@@ -1,0 +1,14 @@
+.container-login{
+    margin-top: 10%;    
+}
+.icon-img{
+    width:70px;
+    height:70px;
+    margin-bottom: 5%;
+}
+.btn-primary{
+    width: 150px;
+    color:#fff;
+    background-color: rgb(18, 178, 206) !important;
+    border-color: rgb(18, 178, 206) !important;
+}
