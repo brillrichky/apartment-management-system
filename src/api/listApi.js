@@ -8,7 +8,7 @@ export async function login(username,password){
         username: "admin",
         password: "admin",
     });
-    return response.json()
+    return response.data
 }
 
 export async function getAllTransactionList(){
@@ -19,7 +19,7 @@ export async function getAllTransactionList(){
        Authorization: "Bearer " + token,
      },
    });
-   return response.json();
+   return response.data;
 }
 
 export async function getResident() {
@@ -30,7 +30,7 @@ export async function getResident() {
       Authorization: "Bearer " + token,
     },
   });
-  return response.json();
+  return response.data;
 }
 
 export async function getUnits() {
@@ -41,7 +41,7 @@ export async function getUnits() {
       Authorization: "Bearer " + token,
     },
   });
-  return response.json();
+  return response.data;
 }
 
 export async function postTransactions(payload){
@@ -52,7 +52,7 @@ export async function postTransactions(payload){
          Authorization: "Bearer " + token,
        },
      });
-     return response.json();
+     return response.data;
 }
 
 export async function postResidents(payload) {
@@ -63,7 +63,7 @@ export async function postResidents(payload) {
       Authorization: "Bearer " + token,
     },
   });
-  return response.json();
+  return response.data;
 }
 
 export async function postUnits(payload) {
@@ -74,7 +74,7 @@ export async function postUnits(payload) {
       Authorization: "Bearer " + token,
     },
   });
-  return response.json();
+  return response.data;
 }
 
 export async function updateTransactionById(payload) {
