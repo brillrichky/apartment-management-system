@@ -1,6 +1,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect,useState } from 'react';
+import { Navigate } from "react-router-dom";
 import {
   getListTransaction,
   getListResident,
@@ -14,6 +15,8 @@ import uniqid from 'uniqid'
 import moment from 'moment'
 
 function TransactionForm(props) {
+    const [logout, setLogout] = useState(false);
+
     const dispatch = useDispatch();
     const {setPage} = props
     const state = useSelector((storedState) => storedState);
@@ -25,12 +28,18 @@ function TransactionForm(props) {
         dispatch(getListUnits())
     },[])
 
+      const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+       
+        setLogout(true);
+        
+      };
+
+      
+
     const [hide,setHide] = useState(true)
 
-    const disabledDate = (current) => {
-      // Can not select days before today and today
-      return ;
-    };
 
     const onFinish = () =>{
         console.log(state.store.units.find((item) => item.id === form.getFieldValue('units')))
@@ -118,203 +127,215 @@ function TransactionForm(props) {
     }
 
     const unitIsAvailable = state?.store?.units.filter((item) => item.status === 'available')
+    if (logout) {
+      return <Navigate to="/login" />;
+    }
         return (
-          <Row
-            type="flex"
-            justify="center"
-            align="middle"
-            style={{ minHeight: "100vh" }}
-          >
-            <Card style={{ width: "50%" }}>
-              <Form
-                form={form}
-                name="basic"
-                labelCol={{
-                  span: 8,
-                }}
-                wrapperCol={{
-                  span: 16,
-                }}
-                initialValues={{
-                  remember: true,
-                }}
-                autoComplete="off"
-                onFinish={onFinish}
-              >
-                <Form.Item
-                  label="Unit Apartement"
-                  name="units"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input unit apartment !",
-                    },
-                  ]}
-                >
-                  <Select onChange={(e) => form.setFieldValue("units", e)}>
-                    {unitIsAvailable.map((e) => {
-                      return (
-                        <Select.Option value={e.id}>{e.unitCode}</Select.Option>
-                      );
-                    })}
-                  </Select>
-                </Form.Item>
-                <Form.Item
-                  label="Nama penyewa"
-                  name="resident"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your name!",
-                    },
-                  ]}
-                >
-                  <Select>
-                    {state?.store?.residents?.map((e) => {
-                      return (
-                        <Select.Option value={e.id}>{e.fullname}</Select.Option>
-                      );
-                    })}
-                  </Select>
-                </Form.Item>
-                <Form.Item
-                  label="type"
-                  name="type"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input type !",
-                    },
-                  ]}
-                >
-                  <Select
-                    onChange={(e) => {
-                      onChangeType(e);
-                    }}
-                  >
-                    <Select.Option value="sewa">Sewa</Select.Option>
-                    <Select.Option value="jual">Jual</Select.Option>
-                  </Select>
-                </Form.Item>
-                <Form.Item
-                  label="Price"
-                  name="price"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input price !",
-                    },
-                  ]}
-                >
-                  <Input readOnly value={form.getFieldValue("price")} />
-                </Form.Item>
-                <Form.Item
-                  label="Transaction Price"
-                  name="trxPrice"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input Transaction Price !",
-                    },
-                  ]}
-                >
-                  <Input type="number" />
-                </Form.Item>
-                <Form.Item
-                  label="Transaction Date"
-                  name="trxDate"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input Transction Date!",
-                    },
-                  ]}
-                >
-                  <DatePicker
-                    disabledDate={(current) =>
-                      current.isBefore(moment().subtract(1, "day"))
-                    }
-                  />
-                </Form.Item>
-                {hide === false ? (
-                  <>
-                    <Form.Item
-                      hidden={false}
-                      label="Start Date"
-                      name="startDate"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your start date !",
-                        },
-                      ]}
-                    >
-                      <DatePicker
-                        disabledDate={(current) =>
-                          current.isBefore(moment().subtract(1, "day"))
-                        }
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      label="End Date"
-                      name="endDate"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your End date!",
-                        },
-                      ]}
-                    >
-                      <DatePicker
-                        disabledDate={(current) =>
-                          current.isBefore(moment().subtract(1, "day"))
-                        }
-                        onChange={(e) => calculatePeriod(e)}
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      label="Periode"
-                      name="periode"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input periode!",
-                        },
-                      ]}
-                    >
-                      <Input />
-                    </Form.Item>
-                    <Form.Item
-                      label="Billing Date"
-                      name="billingDate"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your Billing Date!",
-                        },
-                      ]}
-                    >
-                      <DatePicker
-                        disabledDate={(current) =>
-                          current.isBefore(moment().subtract(1, "day"))
-                        }
-                      />
-                    </Form.Item>
-                  </>
-                ) : null}
-                <Form.Item
+          <>
+            <Row>
+              <Button onClick={handleLogout}>Logout</Button>
+            </Row>
+            <Row
+              type="flex"
+              justify="center"
+              align="middle"
+              style={{ minHeight: "100vh" }}
+            >
+              <Card style={{ width: "50%" }}>
+                <Form
+                  form={form}
+                  name="basic"
+                  labelCol={{
+                    span: 8,
+                  }}
                   wrapperCol={{
-                    offset: 8,
                     span: 16,
                   }}
+                  initialValues={{
+                    remember: true,
+                  }}
+                  autoComplete="off"
+                  onFinish={onFinish}
                 >
-                  <Button type="primary" htmlType="submit">
-                    Submit
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Card>
-          </Row>
+                  <Form.Item
+                    label="Unit Apartement"
+                    name="units"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input unit apartment !",
+                      },
+                    ]}
+                  >
+                    <Select onChange={(e) => form.setFieldValue("units", e)}>
+                      {unitIsAvailable.map((e) => {
+                        return (
+                          <Select.Option value={e.id}>
+                            {e.unitCode}
+                          </Select.Option>
+                        );
+                      })}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    label="Nama penyewa"
+                    name="resident"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your name!",
+                      },
+                    ]}
+                  >
+                    <Select>
+                      {state?.store?.residents?.map((e) => {
+                        return (
+                          <Select.Option value={e.id}>
+                            {e.fullname}
+                          </Select.Option>
+                        );
+                      })}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    label="type"
+                    name="type"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input type !",
+                      },
+                    ]}
+                  >
+                    <Select
+                      onChange={(e) => {
+                        onChangeType(e);
+                      }}
+                    >
+                      <Select.Option value="sewa">Sewa</Select.Option>
+                      <Select.Option value="jual">Jual</Select.Option>
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    label="Price"
+                    name="price"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input price !",
+                      },
+                    ]}
+                  >
+                    <Input readOnly value={form.getFieldValue("price")} />
+                  </Form.Item>
+                  <Form.Item
+                    label="Transaction Price"
+                    name="trxPrice"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input Transaction Price !",
+                      },
+                    ]}
+                  >
+                    <Input type="number" />
+                  </Form.Item>
+                  <Form.Item
+                    label="Transaction Date"
+                    name="trxDate"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input Transction Date!",
+                      },
+                    ]}
+                  >
+                    <DatePicker
+                      disabledDate={(current) =>
+                        current.isBefore(moment().subtract(1, "day"))
+                      }
+                    />
+                  </Form.Item>
+                  {hide === false ? (
+                    <>
+                      <Form.Item
+                        hidden={false}
+                        label="Start Date"
+                        name="startDate"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input your start date !",
+                          },
+                        ]}
+                      >
+                        <DatePicker
+                          disabledDate={(current) =>
+                            current.isBefore(moment().subtract(1, "day"))
+                          }
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        label="End Date"
+                        name="endDate"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input your End date!",
+                          },
+                        ]}
+                      >
+                        <DatePicker
+                          disabledDate={(current) =>
+                            current.isBefore(moment().subtract(1, "day"))
+                          }
+                          onChange={(e) => calculatePeriod(e)}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        label="Periode"
+                        name="periode"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input periode!",
+                          },
+                        ]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        label="Billing Date"
+                        name="billingDate"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input your Billing Date!",
+                          },
+                        ]}
+                      >
+                        <DatePicker
+                          disabledDate={(current) =>
+                            current.isBefore(moment().subtract(1, "day"))
+                          }
+                        />
+                      </Form.Item>
+                    </>
+                  ) : null}
+                  <Form.Item
+                    wrapperCol={{
+                      offset: 8,
+                      span: 16,
+                    }}
+                  >
+                    <Button type="primary" htmlType="submit">
+                      Submit
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </Card>
+            </Row>
+          </>
         );
 }
 
