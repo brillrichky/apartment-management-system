@@ -43,9 +43,10 @@ export function Login(){
             else
             return Promise.reject(response) //muncul alert
         })
-        .then((username,fullname,token)=>{
-            localStorage.setItem('token',token);
-            localStorage.setItem('user',fullname);
+        .then((resp,fullname,token)=>{
+            console.log(token,resp);
+            localStorage.setItem('token',resp.token);
+            localStorage.setItem('user',resp.fullname);
             return navigate('/');
         })
         .catch((response)=>{
