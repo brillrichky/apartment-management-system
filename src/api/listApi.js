@@ -1,25 +1,23 @@
-import React from "react";
+// import React from "react";
 import axios from "axios";
 
-
-
-export async function login(username,password){
-    const response = await axios.post("/login", {
-        username: "admin",
-        password: "admin",
-    });
-    return response.json()
+export async function login(username, password) {
+  const response = await axios.post("/login", {
+    username: "admin",
+    password: "admin",
+  });
+  return response.json();
 }
 
-export async function getAllTransactionList(){
-   const url = `/api/transactions`;
-   const token = "YWRtaW46YWRtaW4=";
-   const response = await axios.get(url, {
-     headers: {
-       Authorization: "Bearer " + token,
-     },
-   });
-   return response.json();
+export async function getAllTransactionList() {
+  const url = `/api/transactions`;
+  const token = "YWRtaW46YWRtaW4=";
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  return response.json();
 }
 
 export async function getResident() {
@@ -44,15 +42,15 @@ export async function getUnits() {
   return response.json();
 }
 
-export async function postTransactions(payload){
-    const url = `/api/transactions`;
-     const token = "YWRtaW46YWRtaW4=";
-     const response = await axios.post(url, payload, {
-       headers: {
-         Authorization: "Bearer " + token,
-       },
-     });
-     return response.json();
+export async function postTransactions(payload) {
+  const url = `/api/transactions`;
+  const token = "YWRtaW46YWRtaW4=";
+  const response = await axios.post(url, payload, {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  return response.json();
 }
 
 export async function postResidents(payload) {
@@ -88,7 +86,6 @@ export async function updateTransactionById(payload) {
   return response.json();
 }
 
-
 export async function updateResidents(payload) {
   const url = `/api/residents/${payload.id}`;
   const token = "YWRtaW46YWRtaW4=";
@@ -100,15 +97,15 @@ export async function updateResidents(payload) {
   return response.json();
 }
 
-export async function updateUnits(payload){
-    const url = `/api/units/${payload.id}`;
-    const token = "YWRtaW46YWRtaW4=";
-    const response = await axios.put(url, payload, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-    return response.json();
+export async function updateUnits(payload) {
+  const url = `/api/units/${payload.id}`;
+  const token = "YWRtaW46YWRtaW4=";
+  const response = await axios.put(url, payload, {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  return response.json();
 }
 
 export async function deleteTransaction(id) {

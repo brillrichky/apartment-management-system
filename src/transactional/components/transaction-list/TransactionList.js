@@ -25,8 +25,8 @@ const data = {
       rentEndDate: "",
       billingDate: "",
       period: null,
-      price: 550000000,
-      profit: 50000000,
+      price: 650000000,
+      profit: 103500000,
     },
     {
       id: 3,
@@ -37,8 +37,8 @@ const data = {
       rentEndDate: "",
       billingDate: "",
       period: null,
-      price: 550000000,
-      profit: 50000000,
+      price: 750000000,
+      profit: 2150000,
     },
   ],
   residents: [
@@ -124,10 +124,13 @@ export function TransactionList() {
     transaction: listState.transactions,
   });
 
-  const [isAscending, setIsAscending] = useState(true);
+  const [isAscending, setIsAscending] = useState({
+    date: true,
+    profit: true,
+  });
 
-  const sortByDate = (isAscending) => {
-    if (isAscending) {
+  const sortByDate = (value) => {
+    if (value) {
       const newTransactions = data.transactions.sort(
         (a, b) => a.transactionDate - b.transactionDate
       );
@@ -146,17 +149,50 @@ export function TransactionList() {
       });
       console.log("IN DESCENDING", listState.transactions);
     }
-    console.log("IN ASCENDING?", isAscending);
-    setIsAscending(!isAscending);
-    console.log("IN ASCENDING??", isAscending);
+    console.log("IN ASCENDING?", isAscending.date);
+    setIsAscending({ ...isAscending, date: !value });
+    console.log("IN ASCENDING??", isAscending.date);
+  };
+
+  const sortByProfit = (value) => {
+    if (value) {
+      const newTransactions = data.transactions.sort(
+        (a, b) => a.profit - b.profit
+      );
+      setListState({
+        ...listState,
+        transactions: newTransactions,
+      });
+      console.log("IN ASCENDING", listState.transactions);
+    } else {
+      const newTransactions = data.transactions.sort(
+        (a, b) => b.profit - a.profit
+      );
+      setListState({
+        ...listState,
+        transactions: newTransactions,
+      });
+      console.log("IN DESCENDING", listState.transactions);
+    }
+    console.log("IN ASCENDING?", isAscending.profit);
+    setIsAscending({ ...isAscending, profit: !value });
+    console.log("IN ASCENDING??", isAscending.profit);
   };
 
   return (
     <>
       <Row>
         <Button>Add Transaction</Button>
-        <Button>Filter by Profit</Button>
-        <Button onClick={() => sortByDate(isAscending)}>
+        <Button
+          variant={isAscending.profit ? "primary" : "outline-primary"}
+          onClick={() => sortByProfit(isAscending.profit)}
+        >
+          Filter by Profit
+        </Button>
+        <Button
+          variant={isAscending.date ? "primary" : "outline-primary"}
+          onClick={() => sortByDate(isAscending.date)}
+        >
           Filter by Transaction Date
         </Button>
       </Row>
