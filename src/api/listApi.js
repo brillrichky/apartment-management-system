@@ -17,7 +17,7 @@ export async function getAllTransactionList() {
       Authorization: "Bearer " + token,
     },
   });
-  return response.json();
+  return response.data;
 }
 
 export async function getResident() {
@@ -28,7 +28,7 @@ export async function getResident() {
       Authorization: "Bearer " + token,
     },
   });
-  return response.json();
+  return response.data;
 }
 
 export async function getUnits() {
@@ -39,7 +39,7 @@ export async function getUnits() {
       Authorization: "Bearer " + token,
     },
   });
-  return response.json();
+  return response.data;
 }
 
 export async function postTransactions(payload) {
