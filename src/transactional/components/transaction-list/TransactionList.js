@@ -129,73 +129,24 @@ export function TransactionList() {
     dispatch(fetchTransactions());
   }, [dispatch, state.status.action]);
 
-  // const [listState, setListState] = useState({
-  //   transactions: data.transactions,
-  //   units: data.units,
-  //   residents: data.residents,
-  // });
+  const [isAscending, setAsc] = useState({});
 
-  // const [oldListState, setOldListState] = useState({
-  //   transaction: listState.transactions,
-  // });
-
-  // const [isAscending, setIsAscending] = useState({
-  //   date: true,
-  //   profit: true,
-  // });
-
-  // const sortByDate = (value) => {
-  //   if (value) {
-  //     const newTransactions = data.transactions.sort(
-  //       (a, b) => a.transactionDate - b.transactionDate
-  //     );
-  //     setListState({
-  //       ...listState,
-  //       transactions: newTransactions,
-  //     });
-  //     console.log("IN ASCENDING", listState.transactions);
-  //   } else {
-  //     const newTransactions = data.transactions.sort(
-  //       (a, b) => b.transactionDate - a.transactionDate
-  //     );
-  //     setListState({
-  //       ...listState,
-  //       transactions: newTransactions,
-  //     });
-  //     console.log("IN DESCENDING", listState.transactions);
-  //   }
-  //   console.log("IN ASCENDING?", isAscending.date);
-  //   setIsAscending({ ...isAscending, date: !value });
-  //   console.log("IN ASCENDING??", isAscending.date);
-  // };
-
-  // const sortByProfit = (value) => {
-  //   if (value) {
-  //     const newTransactions = data.transactions.sort(
-  //       (a, b) => a.profit - b.profit
-  //     );
-  //     setListState({
-  //       ...listState,
-  //       transactions: newTransactions,
-  //     });
-  //     console.log("IN ASCENDING", listState.transactions);
-  //   } else {
-  //     const newTransactions = data.transactions.sort(
-  //       (a, b) => b.profit - a.profit
-  //     );
-  //     setListState({
-  //       ...listState,
-  //       transactions: newTransactions,
-  //     });
-  //     console.log("IN DESCENDING", listState.transactions);
-  //   }
-  //   console.log("IN ASCENDING?", isAscending.profit);
-  //   setIsAscending({ ...isAscending, profit: !value });
-  //   console.log("IN ASCENDING??", isAscending.profit);
-  // };
+  const sortByDate = () => {};
 
   if (state.status.isLoading) {
-    return <Spinner>LOADING . . .</Spinner>;
+    return (
+      <Row>
+        <Col />
+        <Col className="text-center">
+          <Spinner
+            animation="border"
+            className="mx-5"
+            style={{ width: "4rem", height: "4rem", margin: "20px" }}
+          ></Spinner>
+        </Col>
+        <Col />
+      </Row>
+    );
   }
   return (
     <>
@@ -205,20 +156,17 @@ export function TransactionList() {
         </Col>
       </Row>
       <Row>
-        <Col className="my-2 d-flex justify-content-center">
+        <Col className="my-2 d-flex justify-content-start">
           <Button
           // variant={isAscending.profit ? "primary" : "outline-primary"}
           // onClick={() => sortByProfit(isAscending.profit)}
           >
             Filter by Profit
           </Button>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="my-2 d-flex justify-content-center">
           <Button
-          // variant={isAscending.date ? "primary" : "outline-primary"}
-          // onClick={() => sortByDate(isAscending.date)}
+            className="mx-2"
+            // variant={isAscending.date ? "primary" : "outline-primary"}
+            // onClick={() => sortByDate(isAscending.date)}
           >
             Filter by Transaction Date
           </Button>
@@ -280,3 +228,64 @@ export function TransactionList() {
     </>
   );
 }
+
+// const [listState, setListState] = useState({
+//   transactions: data.transactions,
+//   units: data.units,
+//   residents: data.residents,
+// });
+
+// const [isAscending, setIsAscending] = useState({
+//   date: true,
+//   profit: true,
+// });
+
+// const sortByDate = (value) => {
+//   if (value) {
+//     const newTransactions = data.transactions.sort(
+//       (a, b) => a.transactionDate - b.transactionDate
+//     );
+//     setListState({
+//       ...listState,
+//       transactions: newTransactions,
+//     });
+//     console.log("IN ASCENDING", listState.transactions);
+//   } else {
+//     const newTransactions = data.transactions.sort(
+//       (a, b) => b.transactionDate - a.transactionDate
+//     );
+//     setListState({
+//       ...listState,
+//       transactions: newTransactions,
+//     });
+//     console.log("IN DESCENDING", listState.transactions);
+//   }
+//   console.log("IN ASCENDING?", isAscending.date);
+//   setIsAscending({ ...isAscending, date: !value });
+//   console.log("IN ASCENDING??", isAscending.date);
+// };
+
+// const sortByProfit = (value) => {
+//   if (value) {
+//     const newTransactions = data.transactions.sort(
+//       (a, b) => a.profit - b.profit
+//     );
+//     setListState({
+//       ...listState,
+//       transactions: newTransactions,
+//     });
+//     console.log("IN ASCENDING", listState.transactions);
+//   } else {
+//     const newTransactions = data.transactions.sort(
+//       (a, b) => b.profit - a.profit
+//     );
+//     setListState({
+//       ...listState,
+//       transactions: newTransactions,
+//     });
+//     console.log("IN DESCENDING", listState.transactions);
+//   }
+//   console.log("IN ASCENDING?", isAscending.profit);
+//   setIsAscending({ ...isAscending, profit: !value });
+//   console.log("IN ASCENDING??", isAscending.profit);
+// };
