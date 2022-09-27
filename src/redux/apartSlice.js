@@ -1,16 +1,24 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
-import { getAllTransactionList,getUnits,getResident,postTransactions } from "../api/listApi";
+import {
+  getAllTransactionList,
+  getUnits,
+  getResident,
+  postTransactions,
+} from "../api/listApi";
 const initialState = {
   transactional: [],
   units: [],
-  residents:[],
+  residents: [],
   status: "done",
 };
 
-export const getListTransaction = createAsyncThunk("apart/fetchDataTransactional", async () => {
-  const response = await getAllTransactionList();
-  return response;
-});
+export const getListTransaction = createAsyncThunk(
+  "apart/fetchDataTransactional",
+  async () => {
+    const response = await getAllTransactionList();
+    return response;
+  }
+);
 
 export const getListUnits = createAsyncThunk(
   "apart/fetchDataUnits",
@@ -19,7 +27,6 @@ export const getListUnits = createAsyncThunk(
     return response;
   }
 );
-
 
 export const getListResident = createAsyncThunk(
   "apart/fetchDataResident",
