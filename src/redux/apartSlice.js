@@ -4,12 +4,16 @@ import {
   getUnits,
   getResident,
   postTransactions,
+  updateTransactionById,
+  updateUnits,
+  postUnits
 } from "../api/listApi";
 const initialState = {
   transactional: [],
   units: [],
   residents: [],
   status: "done",
+  detail:[]
 };
 
 export const getListTransaction = createAsyncThunk(
@@ -44,12 +48,30 @@ export const postTransactional = createAsyncThunk(
   }
 );
 
+export const updateByIdTransactional = createAsyncThunk(
+  "apart/updateByIdTransactional",
+  async (payload) => {
+    const response = await updateTransactionById(payload);
+    return response;
+  }
+);
+
+export const updatedUnits = createAsyncThunk("apart/updateUnits", async (payload) => {
+  const response = await updateUnits(payload);
+  return response;
+});
+
 export const apartSlice = createSlice({
   name: "apart",
   initialState,
   reducers: {
     getdata: (state) => {
       return state;
+    },
+    setDetailData : (state,action) => {
+        // state.detail = action.payload
+
+        console.log(state,action)
     },
     filterByRadio: (state, action) => {
       switch (action.payload.type) {
@@ -99,9 +121,21 @@ export const apartSlice = createSlice({
       })
       .addCase(postTransactional.fulfilled, (state, action) => {
         state.status = "done";
+      })
+      .addCase(updateByIdTransactional.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateByIdTransactional.fulfilled, (state, action) => {
+        state.status = "done";
+      })
+      .addCase(updatedUnits.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updatedUnits.fulfilled, (state, action) => {
+        state.status = "done";
       });
   },
 });
 
-export const { getdata, filterByRadio } = apartSlice.actions;
+export const { getdata, filterByRadio, setDetailData } = apartSlice.actions;
 // export default apartSlice.reducer;

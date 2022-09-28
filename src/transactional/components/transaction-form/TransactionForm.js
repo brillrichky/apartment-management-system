@@ -7,6 +7,8 @@ import {
   getListResident,
   getListUnits,
   postTransactional,
+  updateByIdTransactional,
+  updatedUnits
 } from "../../../redux/apartSlice";
 import { Button, Checkbox, Form, Input, Row,Col,Card,Select,DatePicker } from 'antd';
 import React from 'react';
@@ -65,7 +67,23 @@ function TransactionForm(props) {
         }; 
         console.log(form.getFieldsValue())
         console.log(body)
+        //change status unitid
+        let getUnitById = state.store.units.find(
+          (item) => item.id === form.getFieldValue("units")
+        );
+
+        const temp = {...getUnitById}
+        if(form.getFieldValue('type') === 'sewa'){
+            temp.status = 'rented'
+        }
+        else if (form.getFieldValue("type") === "jual") {
+          temp.status = "sold";
+        }
+
+        console.log(temp)
+        dispatch(updatedUnits(temp));
         dispatch(postTransactional(body));
+        
         setPage('list')
     }
 
@@ -82,9 +100,9 @@ function TransactionForm(props) {
             form.setFieldValue('price',unitsSelected[0].rentPrice)
             setHide(false);
         }
-        else if(e === 'jual'){
-            form.setFieldValue("price", unitsSelected[0].sellPrice);
-            setHide(true);
+        else if (e === "jual") {
+          form.setFieldValue("price", unitsSelected[0].sellPrice);
+          setHide(true);
         }
     }
 

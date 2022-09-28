@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { apartStore } from "../../redux/store";
 
 export const Transactions = () => {
-  const [page,setPage] = useState('form')
+  const [page,setPage] = useState('list')
 
   return (
     <Provider store={apartStore}>
