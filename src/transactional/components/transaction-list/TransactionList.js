@@ -140,11 +140,11 @@ export function TransactionList(props) {
               variant={"primary"}
               title={"Floor"}
             >
-              {uniqueFloor.map((unit) => {
+              {/* {uniqueFloor?.map((unit) => {
                 return (
                   <Dropdown.Item onClick={() => {}}>{unit.floor}</Dropdown.Item>
                 );
-              })}
+              })} */}
             </DropdownButton>
             {/* <DropdownButton
               className="mx-2"
