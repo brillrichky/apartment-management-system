@@ -38,10 +38,15 @@ function EditResident(props) {
 
   const onFinish = (e) => {
     let payloads = form.getFieldsValue();
-    // payloads.id = detail?.id;
+    payloads.birthDate = moment(form.getFieldValue('birthDate')).format('YYYY-MM-DD')
+    payloads.id = detailResident?.id;
     console.log(payloads);
+    dispatch(updatedUnits(payloads))
   };
 
+  let temp = {...detailResident}
+  temp.birthDate = moment(detailResident.birthDate, "YYYY-MM-DD"); 
+  console.log(temp);
 
   return (
     <>
@@ -61,7 +66,7 @@ function EditResident(props) {
             wrapperCol={{
               span: 16,
             }}
-            initialValues={detailResident}
+            initialValues={temp}
             autoComplete="off"
             form={form}
             onFinish={onFinish}
@@ -116,7 +121,7 @@ function EditResident(props) {
             </Form.Item>
             <Form.Item
               label="Birthdate"
-              name="birthdate"
+              name="birthDate"
               rules={[
                 {
                   required: true,
@@ -124,7 +129,10 @@ function EditResident(props) {
                 },
               ]}
             >
-              <DatePicker style={{ width: "100%" }} />
+              <DatePicker
+                defaultValue={moment(detailResident.birthDate, "YYYY-MM-DD")}
+                style={{ width: "100%" }}
+              />
             </Form.Item>
             <Form.Item
               label="Dependent"
