@@ -1,23 +1,25 @@
 // import React from "react";
 import axios from "axios";
 
-export async function login(username, password) {
-  const response = await axios.post("/login", {
-    username: "admin",
-    password: "admin",
-  });
-  return response.json();
+
+
+export async function login(username,password){
+    const response = await axios.post("/login", {
+        username: "admin",
+        password: "admin",
+    });
+    return response.data
 }
 
-export async function getAllTransactionList() {
-  const url = `/api/transactions`;
-  const token = "YWRtaW46YWRtaW4=";
-  const response = await axios.get(url, {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
-  return response.data;
+export async function getAllTransactionList(){
+   const url = `/api/transactions`;
+   const token = "YWRtaW46YWRtaW4=";
+   const response = await axios.get(url, {
+     headers: {
+       Authorization: "Bearer " + token,
+     },
+   });
+   return response.data;
 }
 
 export async function getResident() {
@@ -42,15 +44,15 @@ export async function getUnits() {
   return response.data;
 }
 
-export async function postTransactions(payload) {
-  const url = `/api/transactions`;
-  const token = "YWRtaW46YWRtaW4=";
-  const response = await axios.post(url, payload, {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
-  return response.json();
+export async function postTransactions(payload){
+    const url = `/api/transactions`;
+     const token = "YWRtaW46YWRtaW4=";
+     const response = await axios.post(url, payload, {
+       headers: {
+         Authorization: "Bearer " + token,
+       },
+     });
+     return response.data;
 }
 
 export async function postResidents(payload) {
@@ -61,7 +63,7 @@ export async function postResidents(payload) {
       Authorization: "Bearer " + token,
     },
   });
-  return response.json();
+  return response.data;
 }
 
 export async function postUnits(payload) {
@@ -72,7 +74,7 @@ export async function postUnits(payload) {
       Authorization: "Bearer " + token,
     },
   });
-  return response.json();
+  return response.data;
 }
 
 export async function updateTransactionById(payload) {

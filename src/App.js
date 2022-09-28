@@ -1,18 +1,6 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { TransactionList } from "./transactional/components/transaction-list/TransactionList";
-import { Provider } from "react-redux";
-import { store } from "./transactional/reducer/store";
-import { Container } from "react-bootstrap";
-
-function App() {
-  return (
-    <Provider store={store}>
-      <Container fluid>
-        <TransactionList />
-      </Container>
-    </Provider>
-  );
+import { Login } from "./Components/Login/Login";
+import { Outlet } from "react-router-dom";
+// import { Transactions } from './transactional/components/transactions';
+export function App() {
+  return <Outlet />;
 }
-
-export default App;
