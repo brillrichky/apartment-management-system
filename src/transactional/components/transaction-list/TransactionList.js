@@ -1,10 +1,12 @@
 // import { Col, Row, Table } from "antd";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import {
   Button,
   Col,
   Container,
+  Dropdown,
+  DropdownButton,
   Form,
   InputGroup,
   Row,
@@ -21,6 +23,7 @@ import {
   sortByProfit,
   sortByDate,
 } from "../../../redux/transactionSlice";
+import * as ICON from "@ant-design/icons";
 
 export function TransactionList(props) {
   const state = useSelector((e) => e.transaction);
@@ -31,9 +34,15 @@ export function TransactionList(props) {
     dispatch(fetchTransactions());
   }, [dispatch, state.status.action]);
 
-  const [isAscending, setAsc] = useState({});
+  const [uniqueFloor, setUniqueFloor] = useState([
+    ...new Map(state.units.map((unit) => [unit["floor"], unit])).values(),
+  ]);
 
-  const[selected, setSelected] = useState("none");
+  const [uniqueStatus, setUniqueStatus] = useState([
+    ...new Map(state.units.map((unit) => [unit["status"], unit])).values(),
+  ]);
+
+  const [selected, setSelected] = useState("none");
   const handleSetPage = () => {
     const { setPage } = props;
     setPage("form");
@@ -43,21 +52,25 @@ export function TransactionList(props) {
     event.preventDefault();
     const value = event.target.value;
     setSelected(value);
-  }
+  };
 
   const searchByName = (event) => {
     event.preventDefault();
-    console.log("Selected",selected);
-    const selectedNameId = state.residents.find((resident)=>resident.fullname.includes(selected));
-    console.log("selectedNameId",selectedNameId);
-    if(selectedNameId){
-      const nameList = state.transactions.filter((transaction)=>transaction.residentId===selectedNameId.id);
-      console.log("New Data",nameList);
+    console.log("Selected", selected);
+    const selectedNameId = state.residents.find((resident) =>
+      resident.fullname.includes(selected)
+    );
+    console.log("selectedNameId", selectedNameId);
+    if (selectedNameId) {
+      const nameList = state.transactions.filter(
+        (transaction) => transaction.residentId === selectedNameId.id
+      );
+      console.log("New Data", nameList);
       dispatch(filterByName(nameList));
     } else {
       console.log("Tidak ada data");
     }
-  }
+  };
 
   if (state.status.isLoading) {
     return (
@@ -84,19 +97,69 @@ export function TransactionList(props) {
         </Row>
         <Row>
           <Col className="my-2 d-flex justify-content-start">
-            <Button
-            variant={state.status.asc ? "primary" : "outline-primary"}
-            onClick={() => dispatch(sortByProfit())}
-            >
-              Filter by Profit
+            <Button onClick={() => dispatch(sortByProfit())}>
+              {state.status.asc ? (
+                <Row>
+                  <span>
+                    Filter by Profit
+                    <ICON.CaretUpFilled />
+                  </span>
+                </Row>
+              ) : (
+                <Row>
+                  <span>
+                    Filter by Profit
+                    <ICON.CaretDownFilled />
+                  </span>
+                </Row>
+              )}
             </Button>
-            <Button
+            <Button className="mx-2" onClick={() => dispatch(sortByDate())}>
+              {state.status.asc ? (
+                <Row>
+                  <span>
+                    Filter by Date
+                    <ICON.CaretUpFilled />
+                  </span>
+                </Row>
+              ) : (
+                <Row>
+                  <span>
+                    Filter by Date
+                    <ICON.CaretDownFilled />
+                  </span>
+                </Row>
+              )}
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <DropdownButton
+              id={`dropdown-variants-primary`}
+              variant={"primary"}
+              title={"Floor"}
+            >
+              {uniqueFloor.map((unit) => {
+                return (
+                  <Dropdown.Item onClick={() => {}}>{unit.floor}</Dropdown.Item>
+                );
+              })}
+            </DropdownButton>
+            {/* <DropdownButton
               className="mx-2"
-              variant={state.status.asc ? "primary" : "outline-primary"}
-              onClick={() => dispatch(sortByDate())}
+              id={`dropdown-variants-primary`}
+              variant={"primary"}
+              title={"Floor"}
             >
-              Filter by Transaction Date
-            </Button>
+              {uniqueFloor.map((unit) => {
+                return (
+                  <Dropdown.Item onClick={() => {}}>
+                    {unit.status}
+                  </Dropdown.Item>
+                );
+              })}
+            </DropdownButton> */}
           </Col>
         </Row>
         <Row>
@@ -107,15 +170,12 @@ export function TransactionList(props) {
                   placeholder="Search by Name"
                   aria-label="name"
                   aria-describedby="basic-addon1"
-                  onChange={(e)=>handleOnChange(e)}
+                  onChange={(e) => handleOnChange(e)}
                 />
                 <InputGroup.Text id="basic-addon1">Search</InputGroup.Text>
               </InputGroup>
             </Form>
-            <Button
-              className="mx-2"
-              onClick={() => dispatch(refreshList())}
-            >
+            <Button className="mx-2" onClick={() => dispatch(refreshList())}>
               Refresh
             </Button>
           </Col>
