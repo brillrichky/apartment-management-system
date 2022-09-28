@@ -8,9 +8,9 @@ import {
   getListUnits,
   postTransactional,
   updateByIdTransactional,
-  updatedUnits
+  updatedUnits,
 } from "../../../redux/apartSlice";
-import { Button, Checkbox, Form, Input, Row,Col,Card,Select,DatePicker } from 'antd';
+import { Button, Checkbox, Form, Input, Row,Col,Card,Select,DatePicker,Space } from 'antd';
 import React from 'react';
 import { getUnits } from "../../../api/listApi";
 import uniqid from 'uniqid'
@@ -150,9 +150,6 @@ function TransactionForm(props) {
     }
         return (
           <>
-            <Row>
-              <Button onClick={handleLogout}>Logout</Button>
-            </Row>
             <Row
               type="flex"
               justify="center"
@@ -346,9 +343,16 @@ function TransactionForm(props) {
                       span: 16,
                     }}
                   >
-                    <Button type="primary" htmlType="submit">
-                      Submit
-                    </Button>
+                    <Space>
+                      <Button type="primary" htmlType="submit">
+                        Submit
+                      </Button>
+                      <Button type="primary" onClick={()=> {
+                        setPage('list')
+                      }}>
+                        Back
+                      </Button>
+                    </Space>
                   </Form.Item>
                 </Form>
               </Card>

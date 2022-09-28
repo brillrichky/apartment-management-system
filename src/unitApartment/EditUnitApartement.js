@@ -39,6 +39,7 @@ function EditUnitApartement(props) {
     let payloads = form.getFieldsValue()
     payloads.id = detail?.id
     dispatch(updatedUnits(payloads));
+    setPage('list')
      console.log(payloads);
   }
 
@@ -186,7 +187,7 @@ function EditUnitApartement(props) {
               rules={[
                 {
                   required: true,
-                  message: "Please input Transaction Price !",
+                  message: "Please input Rental Price !",
                 },
               ]}
             >
@@ -198,7 +199,7 @@ function EditUnitApartement(props) {
               rules={[
                 {
                   required: true,
-                  message: "Please input Transction Date!",
+                  message: "Please input Rental schema !",
                 },
               ]}
             >
@@ -233,7 +234,7 @@ function EditUnitApartement(props) {
               rules={[
                 {
                   required: true,
-                  message: "Please input Transction Date!",
+                  message: "Please input Balcony !",
                 },
               ]}
             >
@@ -248,7 +249,7 @@ function EditUnitApartement(props) {
               rules={[
                 {
                   required: true,
-                  message: "Please input Transction Date!",
+                  message: "Please input Direction !",
                 },
               ]}
             >

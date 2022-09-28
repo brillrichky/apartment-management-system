@@ -7,6 +7,24 @@ import { Transactions } from "../src/transactional/components/Transactions";
 import UnitApartement from "../src/unitApartment/UnitApartement";
 
 export const routes = createBrowserRouter([
+  //   {
+  //     path: "/",
+  //     element: <App />,
+  //     children: [
+  //       {
+  //         path: "",
+  //         element: (
+  //           <Protect>
+  //             <UnitApartement />
+  //           </Protect>
+  //         ),
+  //       },
+  //       {
+  //         path: "login",
+  //         element: <Login />,
+  //       },
+  //     ],
+  //   },
   {
     path: "/",
     element: <App />,
@@ -15,13 +33,32 @@ export const routes = createBrowserRouter([
         path: "",
         element: (
           <Protect>
-            <UnitApartement />
+            {" "}
+            <Home />
           </Protect>
         ),
       },
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "/home",
+        element: (
+          <Protect>
+            {" "}
+            <Home />
+          </Protect>
+        ),
+      },
+      {
+        path: "/transactions",
+        element: (
+          <Protect>
+            {" "}
+            <Transactions/>
+          </Protect>
+        ),
       },
     ],
   },

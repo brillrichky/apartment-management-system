@@ -1,6 +1,5 @@
-import { Login } from "./Components/Login/Login";
-import { Outlet } from "react-router-dom";
-// import { Transactions } from './transactional/components/transactions';
+import {Outlet} from "react-router-dom";
+
 export function App() {
   return <Outlet />;
 }
