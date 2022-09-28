@@ -12,7 +12,7 @@ export const navItems = [
   {
     id: 2,
     title: "Transactions",
-    path: "./transactions",
+    path: "/transactions",
     nName: "nav-item",
     sName: "sidebar-item",
     icon: <Icons.FaMoneyBillAlt />,
