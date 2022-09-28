@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import {App} from './App';
 import Home from '../src/Components/HomeDummy';
+import Trans from "./Components/TransDummy";
 import {Login} from './Components/Login/Login';
 import {Protect} from './Protect';
 
@@ -21,6 +22,11 @@ export const routes = createBrowserRouter([
             {
                 path:'/home',
                 element:<Protect><Home/></Protect>
+
+            },
+            {
+                path:'/transactions',
+                element:<Protect><Trans/></Protect>
 
             }
         ]
