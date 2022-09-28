@@ -1,4 +1,9 @@
-import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAction,
+  createAsyncThunk,
+  createSlice,
+  current,
+} from "@reduxjs/toolkit";
 import * as API from "../api/listApi";
 
 const initialState = {
@@ -57,20 +62,28 @@ export const transactionSlice = createSlice({
     filterByFloor: (state, action) => {
       //belum
     },
-    sortByDate: (state, action) => { // not working
+    sortByDate: (state, action) => {
       if (state.status.asc) {
         state.transactions.sort((a, b) => {
-          const tempA = new Date(a.transactionDate);
-          const tempB = new Date(b.transactionDate);
-          return tempA - tempB;
+          const x = Date.parse(a.transactionDate);
+          const y = Date.parse(b.transactionDate);
+          return (
+            // Number(a.transactionDate.slice(0, 2) + a.transactionDate.slice(8)) -
+            // Number(b.transactionDate.slice(0, 2) + b.transactionDate.slice(8))
+            x - y
+          );
         });
         state.status.asc = false;
       } else {
-        state.transactions.sort((a, b) => {
-          const tempA = new Date(a.transactionDate);
-          const tempB = new Date(b.transactionDate);
-          return tempB - tempA;
-        });
+        state.transactions.sort(
+          (a, b) => {
+            const x = Date.parse(a.transactionDate);
+            const y = Date.parse(b.transactionDate);
+            return y - x;
+          }
+          // Number(b.transactionDate.slice(0, 2) + b.transactionDate.slice(8)) -
+          // Number(a.transactionDate.slice(0, 2) + a.transactionDate.slice(8))
+        );
         state.status.asc = true;
       }
     },
@@ -101,5 +114,11 @@ export const transactionSlice = createSlice({
   },
 });
 
-export const { filterByName, refreshList, sortByProfit, sortByDate, filterByFloor, filterByStatus } =
-  transactionSlice.actions;
+export const {
+  filterByName,
+  refreshList,
+  sortByProfit,
+  sortByDate,
+  filterByFloor,
+  filterByStatus,
+} = transactionSlice.actions;
