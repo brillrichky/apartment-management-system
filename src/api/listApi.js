@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import axios from "axios";
 
 
@@ -88,7 +88,6 @@ export async function updateTransactionById(payload) {
   return response.json();
 }
 
-
 export async function updateResidents(payload) {
   const url = `/api/residents/${payload.id}`;
   const token = "YWRtaW46YWRtaW4=";
@@ -100,15 +99,15 @@ export async function updateResidents(payload) {
   return response.json();
 }
 
-export async function updateUnits(payload){
-    const url = `/api/units/${payload.id}`;
-    const token = "YWRtaW46YWRtaW4=";
-    const response = await axios.put(url, payload, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-    return response.json();
+export async function updateUnits(payload) {
+  const url = `/api/units/${payload.id}`;
+  const token = "YWRtaW46YWRtaW4=";
+  const response = await axios.put(url, payload, {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  return response.json();
 }
 
 export async function deleteTransaction(id) {
