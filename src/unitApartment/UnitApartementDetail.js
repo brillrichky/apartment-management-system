@@ -145,7 +145,7 @@ const findResidentId = state.store.residents.find(
             </Row>
             <Divider />
             <Row>
-              <p>Resident</p>
+              <h4>Detail Resident</h4>
             </Row>
             <Row gutter={16}>
               <Col className="gutter-row" span={4}>
